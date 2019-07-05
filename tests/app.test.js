@@ -1,0 +1,27 @@
+const test = require('tape');
+const supertest = require('supertest');
+const app = require('../app.js');
+
+test('GET /aplicarDesconto/10/5', (t) => {
+	supertest(app)
+		.get('/aplicarDesconto/10/5')
+		.expect('Content-type', /json/)
+		.expect(200)
+		.end((err, res) => {
+			t.error(err, 'Sem erros');
+			t.assert(res.body.valorDescontado === 5, 'Desconto correto');
+			t.end();
+		})
+})
+
+test('GET /aplicarDesconto/5/10', (t) => {
+	supertest(app)
+		.get('/aplicarDesconto/5/10')
+		.expect('Content-type', /json/)
+		.expect(200)
+		.end((err, res) => {
+			t.error(err, 'Sem erros');
+			t.assert(res.body.valorDescontado === 0, 'Desconto correto');
+			t.end();
+		})
+})
